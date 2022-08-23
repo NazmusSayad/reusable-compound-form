@@ -1,11 +1,11 @@
-import Form from './components/Form/Form'
+import Signup from './layouts/Signup/Signup'
 
 const App = () => {
-  const formSubmit = value => {
-    console.log({ value })
+  const getSignUpInfo = info => {
+    console.log(info)
   }
 
-  return <Form submit={formSubmit} />
+  return <Signup submit={getSignUpInfo} />
 }
 
 export default App
