@@ -9,6 +9,16 @@
   background-color: #00000030;
   padding: 3rem 4rem;
   border-radius: 0.5rem;
+
+  &__progress {
+    height: 10px;
+
+    * {
+      transition: width 0.3s ease-in-out;
+      background-color: red;
+      height: inherit;
+    }
+  }
 }
 
 .input {
