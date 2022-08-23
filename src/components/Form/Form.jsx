@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo } from 'react'
 import css from './Form.module.scss'
+import useInput from '../../hooks/useInput'
 
 const generateFormData = inputList => {
   const obj = {}
@@ -9,12 +10,20 @@ const generateFormData = inputList => {
   return obj
 }
 
-const Form = ({ submit, children: inputList }) => {
+const generateInputList = inputList =>
+  inputList.map(input => {
+    input.state = useInput(input.validator)
+    return input
+  })
+
+const Form = ({ submit, inputList }) => {
+  inputList = generateInputList(inputList)
+
   const currentInputRef = useRef()
-  const [index, setIndex] = useState(null)
+  const [index, setIndex] = useState(0)
   const [progress, setProgress] = useState(0)
 
-  const currentInput = inputList[index || 0]
+  const currentInput = inputList[index]
   const Input = currentInput.Input
 
   const handleFormSubmit = () => {
@@ -40,12 +49,6 @@ const Form = ({ submit, children: inputList }) => {
     if (currentInput.state.isValid) successfullIndex++
     setProgress(successfullIndex / inputList.length)
   }, [index, currentInput.state.isValid])
-
-  useEffect(() => {
-    setIndex(0)
-  }, [])
-
-  console.log('Hello')
 
   return (
     <div className={css.formContainer}>

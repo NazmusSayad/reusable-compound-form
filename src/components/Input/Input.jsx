@@ -1,5 +1,4 @@
 import { forwardRef } from 'react'
-import useInput from '../../hooks/useInput'
 import css from './Input.module.scss'
 
 const Input = forwardRef(({ config }, ref) => {

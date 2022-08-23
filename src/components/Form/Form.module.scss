@@ -1,14 +1,11 @@
 .formContainer {
-  min-height: 95vh;
-  display: grid;
-  place-content: center;
+  background-color: #00000030;
+  border-radius: 0.5rem;
 }
 
 .form {
   text-align: center;
-  background-color: #00000030;
   padding: 3rem 4rem;
-  border-radius: 0.5rem;
 
   &__progress {
     height: 10px;
