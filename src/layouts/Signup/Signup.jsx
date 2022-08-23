@@ -17,18 +17,31 @@ const validateEmail = value => {
 const inputList = [
   {
     validator: validateName,
-    key: 'name',
     Input,
+    key: 'firstname',
+    type: 'text',
+    placeholder: 'FirstName',
+  },
+  {
+    validator: validateName,
+    Input,
+    key: 'lastname',
+    type: 'text',
+    placeholder: 'LastName',
   },
   {
     validator: validateEmail,
-    key: 'email',
     Input,
+    key: 'email',
+    type: 'email',
+    placeholder: 'email',
   },
   {
     validator: validatePassword,
-    key: 'password',
     Input,
+    key: 'password',
+    type: 'password',
+    placeholder: 'password',
   },
 ]
 

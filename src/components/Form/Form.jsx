@@ -60,10 +60,13 @@ const Form = ({ submit, inputList }) => {
         <div className={css.input}>
           <Input
             config={{
+              key: currentInput.key,
+              type: currentInput.type,
+              placeholder: currentInput.placeholder,
+              onKeyDown: handleKeydownForEnter,
               value: currentInput.state.value,
               error: currentInput.state.error,
               onBlur: currentInput.state.handler.blur,
-              onKeyDown: handleKeydownForEnter,
               onChange: currentInput.state.handler.change,
             }}
             ref={currentInputRef}
