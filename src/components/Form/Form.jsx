@@ -1,59 +1,21 @@
 import { useEffect, useState, useRef } from 'react'
 import css from './Form.module.scss'
-import Input from './Input'
-import useInput from '../../hooks/useInput'
 
 const generateFormData = inputList => {
   const obj = {}
   ;[...inputList].forEach(input => {
-    obj[input.config.name] = input.state.value.trim()
+    obj[input.key] = input.state.value.trim()
   })
   return obj
 }
-const validateName = value => {
-  return [value.length > 3, 'Enter at least 4 char']
-}
-const validatePassword = value => {
-  return [value.length > 5, 'Enter at least 6 char']
-}
-const validateEmail = value => {
-  const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i
-  const status = regex.test(value.trim())
-  return [status, 'Please enter a valid email.']
-}
 
-const Form = ({ submit }) => {
+const Form = ({ submit, children: inputList }) => {
   const currentInputRef = useRef()
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(null)
   const [progress, setProgress] = useState(0)
 
-  const inputList = [
-    {
-      state: useInput(validateName),
-      config: {
-        type: 'text',
-        name: 'name',
-        placeholder: 'Name',
-      },
-    },
-    {
-      state: useInput(validateEmail),
-      config: {
-        type: 'text',
-        name: 'email',
-        placeholder: 'Email',
-      },
-    },
-    {
-      state: useInput(validatePassword),
-      config: {
-        type: 'password',
-        name: 'password',
-        placeholder: 'Password',
-      },
-    },
-  ]
-  const currentInput = inputList[index]
+  const currentInput = inputList[index || 0]
+  const Input = currentInput.Input
 
   const handleFormSubmit = () => {
     const formData = generateFormData(inputList)
@@ -79,6 +41,12 @@ const Form = ({ submit }) => {
     setProgress(successfullIndex / inputList.length)
   }, [index, currentInput.state.isValid])
 
+  useEffect(() => {
+    setIndex(0)
+  }, [])
+
+  console.log('Hello')
+
   return (
     <div className={css.formContainer}>
       <div className={css.form__progress}>
@@ -88,13 +56,14 @@ const Form = ({ submit }) => {
       <div className={css.form}>
         <div className={css.input}>
           <Input
-            {...currentInput.config}
+            config={{
+              value: currentInput.state.value,
+              error: currentInput.state.error,
+              onBlur: currentInput.state.handler.blur,
+              onKeyDown: handleKeydownForEnter,
+              onChange: currentInput.state.handler.change,
+            }}
             ref={currentInputRef}
-            value={currentInput.state.value}
-            error={currentInput.state.error}
-            onBlur={currentInput.state.handler.blur}
-            onKeyDown={handleKeydownForEnter}
-            onChange={currentInput.state.handler.change}
           />
         </div>
 

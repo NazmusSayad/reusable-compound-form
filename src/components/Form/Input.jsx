@@ -1,29 +1,25 @@
 import { forwardRef } from 'react'
+import useInput from '../../hooks/useInput'
 import css from './Input.module.scss'
 
-const Input = forwardRef(
-  (
-    { type, name, value, placeholder, onBlur, onChange, error, onKeyDown },
-    ref
-  ) => {
-    return (
-      <div>
-        <input
-          ref={ref}
-          type={type}
-          name={name}
-          value={value}
-          placeholder={placeholder}
-          onBlur={onBlur}
-          onKeyDown={onKeyDown}
-          onChange={onChange}
-          autoComplete="off"
-        />
+const Input = forwardRef(({ config }, ref) => {
+  return (
+    <div>
+      <input
+        ref={ref}
+        type={config.type}
+        name={config.name}
+        value={config.value}
+        placeholder={config.placeholder}
+        onBlur={config.onBlur}
+        onKeyDown={config.onKeyDown}
+        onChange={config.onChange}
+        autoComplete="off"
+      />
 
-        <p>{error}</p>
-      </div>
-    )
-  }
-)
+      <p>{config.error}</p>
+    </div>
+  )
+})
 
 export default Input
