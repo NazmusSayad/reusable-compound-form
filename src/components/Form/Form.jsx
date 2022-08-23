@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react'
 import css from './Form.module.scss'
-import useInput from '../../hooks/useInput'
+import useInput from './useInput'
 
 const generateFormData = inputList => {
   const obj = {}
@@ -10,25 +10,36 @@ const generateFormData = inputList => {
   return obj
 }
 
-const generateInputList = inputList =>
-  inputList.map(input => {
+const generateInputList = inputList => {
+  return inputList.map(input => {
     input.state = useInput(input.validator)
     return input
   })
+}
 
-const Form = ({ submit, inputList }) => {
-  inputList = generateInputList(inputList)
+const resetAllInput = inputList => {
+  for (let input of inputList) {
+    input.state.reset()
+  }
+}
 
+const Form = ({ submit, inputList, resetOnSubmit }) => {
   const currentInputRef = useRef()
   const [index, setIndex] = useState(0)
   const [progress, setProgress] = useState(0)
 
+  inputList = generateInputList(inputList)
   const currentInput = inputList[index]
   const Input = currentInput.Input
 
   const handleFormSubmit = () => {
     const formData = generateFormData(inputList)
     submit(formData)
+
+    if (resetOnSubmit === true || resetOnSubmit === 'true') {
+      setIndex(0)
+      resetAllInput(inputList)
+    }
   }
   const handleNextClick = () => {
     if (!currentInput.state.isValid) return

@@ -19,35 +19,35 @@ const inputList = [
     validator: validateName,
     Input,
     key: 'firstname',
-    type: 'text',
-    placeholder: 'FirstName',
+    type: 'text', // Optional
+    placeholder: 'FirstName', // Optional
   },
   {
     validator: validateName,
     Input,
     key: 'lastname',
-    type: 'text',
-    placeholder: 'LastName',
+    type: 'text', // Optional
+    placeholder: 'LastName', // Optional
   },
   {
     validator: validateEmail,
     Input,
     key: 'email',
-    type: 'email',
-    placeholder: 'email',
+    type: 'email', // Optional
+    placeholder: 'email', // Optional
   },
   {
     validator: validatePassword,
     Input,
     key: 'password',
-    type: 'password',
-    placeholder: 'password',
+    type: 'password', // Optional
+    placeholder: 'password', // Optional
   },
 ]
 
 const Signup = ({ submit }) => (
   <div className={css.signup}>
-    <Form submit={submit} inputList={inputList} />
+    <Form submit={submit} inputList={inputList} resetOnSubmit="true" />
   </div>
 )
 
